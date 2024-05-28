@@ -15,7 +15,8 @@ public class CreateUserTest {
         user = User.getRandomUser();
 
         ValidatableResponse response = userProperties.createNewUser(user);
-        token = userChecks.createdSuccessfully(response, user);
+        token = User.getToken(response);
+        userChecks.createdSuccessfully(response, user);
     }
 
     @Test
@@ -40,7 +41,7 @@ public class CreateUserTest {
 
     @After
     public void deleteUser() {
-        if (token != null) {
+        if (token!= null) {
             ValidatableResponse response = userProperties.deleteExistingUser(token);
             userChecks.deleteSuccessfully(response);
         }

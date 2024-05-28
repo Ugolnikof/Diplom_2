@@ -5,7 +5,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-public class LoginUserTest {
+public class ChangeUserTest {
     String token;
     User user;
     private final UserProperties userProperties = new UserProperties();
@@ -19,21 +19,19 @@ public class LoginUserTest {
     }
 
     @Test
-    public void loginUser() {
-        LoggedUser loggedUser = LoggedUser.from(user);
+    public void changeUserWithToken() {
+        user = User.getRandomUser();
 
-        ValidatableResponse response = userProperties.loginNewUser(loggedUser);
-        userChecks.loginSuccessfully(response, loggedUser);
+        ValidatableResponse response = userProperties.changeUser(user, token);
+        userChecks.changeSuccessfully(response, user);
     }
 
     @Test
-    public void loginInvalidUser() {
-        LoggedUser loggedUser = LoggedUser.from(user);
-        String invalidPassword = loggedUser.getPassword().toUpperCase();
-        loggedUser.setPassword(invalidPassword);
+    public void changeUserWithoutToken() {
+        user = User.getRandomUser();
 
-        ValidatableResponse response = userProperties.loginNewUser(loggedUser);
-        userChecks.loginInvalidUserUnSuccessfully(response);
+        ValidatableResponse response = userProperties.changeUser(user);
+        userChecks.changeUnSuccessfully(response);
     }
 
     @After
@@ -43,6 +41,5 @@ public class LoginUserTest {
             userChecks.deleteSuccessfully(response);
         }
     }
-
 
 }

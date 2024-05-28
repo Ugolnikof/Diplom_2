@@ -1,6 +1,7 @@
 package user;
 
 import com.github.javafaker.Faker;
+import io.restassured.response.ValidatableResponse;
 import lombok.*;
 
 @Data
@@ -23,6 +24,16 @@ public class User {
     }
 
     public static User getUserTwin(User user) {
-        return new User(user.getEmail(), user.getPassword(), user.getName());
+        return User.builder()
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .name(user.getName())
+                .build();
+    }
+
+    public static String getToken(ValidatableResponse response) {
+        return response
+                .extract()
+                .path("accessToken");
     }
 }

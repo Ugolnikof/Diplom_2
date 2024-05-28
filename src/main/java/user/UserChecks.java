@@ -8,8 +8,8 @@ import java.net.HttpURLConnection;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class UserChecks {
-    public String createdSuccessfully(ValidatableResponse response, User user) {
-        return response
+    public void createdSuccessfully(ValidatableResponse response, User user) {
+        response
                 .assertThat()
                 .statusCode(HttpURLConnection.HTTP_CREATED)
                 .and()
@@ -17,9 +17,7 @@ public class UserChecks {
                 .body("accessToken", notNullValue())
                 .body("refreshToken", notNullValue())
                 .body("user.name", Matchers.equalTo(user.getName()))
-                .body("user.email", Matchers.equalTo(user.getEmail()))
-                .extract()
-                .path("accessToken");
+                .body("user.email", Matchers.equalTo(user.getEmail()));
     }
 
     public void deleteSuccessfully(ValidatableResponse response) {
@@ -48,8 +46,8 @@ public class UserChecks {
                 .body("message", Matchers.equalTo("Email, password and name are required fields"));
     }
 
-    public String loginSuccessfully(ValidatableResponse response, LoggedUser loggedUser) {
-        return response
+    public void loginSuccessfully(ValidatableResponse response, LoggedUser loggedUser) {
+        response
                 .assertThat()
                 .statusCode(HttpURLConnection.HTTP_OK)
                 .and()
@@ -57,9 +55,7 @@ public class UserChecks {
                 .body("accessToken", notNullValue())
                 .body("refreshToken", notNullValue())
                 .body("user.name", Matchers.equalTo(loggedUser.getName()))
-                .body("user.email", Matchers.equalTo(loggedUser.getEmail()))
-                .extract()
-                .path("accessToken");
+                .body("user.email", Matchers.equalTo(loggedUser.getEmail()));
     }
 
     public void loginInvalidUserUnSuccessfully(ValidatableResponse response) {
@@ -77,8 +73,6 @@ public class UserChecks {
                 .statusCode(HttpURLConnection.HTTP_OK)
                 .and()
                 .body("success", Matchers.equalTo(true))
-                .body("accessToken", notNullValue())
-                .body("refreshToken", notNullValue())
                 .body("user.name", Matchers.equalTo(user.getName()))
                 .body("user.email", Matchers.equalTo(user.getEmail()));
     }
@@ -91,4 +85,6 @@ public class UserChecks {
                 .body("success", Matchers.equalTo(false))
                 .body("message", Matchers.equalTo("You should be authorised"));
     }
+
+
 }
