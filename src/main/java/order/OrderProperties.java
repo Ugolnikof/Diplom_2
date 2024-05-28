@@ -1,0 +1,30 @@
+package order;
+
+import configure.EnvConfig;
+import io.restassured.http.ContentType;
+import io.restassured.response.ValidatableResponse;
+
+import static io.restassured.RestAssured.given;
+
+public class OrderProperties {
+    public ValidatableResponse createNewOrder(Order order, String token) {
+        return given().log().all()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .baseUri(EnvConfig.BASE_URL)
+                .body(order)
+                .when()
+                .post(EnvConfig.ORDER_PATH)
+                .then().log().all();
+    }
+
+    public ValidatableResponse createNewOrder(Order order) {
+        return given().log().all()
+                .contentType(ContentType.JSON)
+                .baseUri(EnvConfig.BASE_URL)
+                .body(order)
+                .when()
+                .post(EnvConfig.ORDER_PATH)
+                .then().log().all();
+    }
+}

@@ -2,7 +2,10 @@ package user;
 
 import com.github.javafaker.Faker;
 import io.restassured.response.ValidatableResponse;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder
