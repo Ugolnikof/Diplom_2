@@ -49,4 +49,22 @@ public class OrderChecks {
                 .assertThat()
                 .statusCode(HttpURLConnection.HTTP_NOT_FOUND);
     }
+
+    public void getOrderSuccessfully(ValidatableResponse response) {
+        response
+                .assertThat()
+                .statusCode(HttpURLConnection.HTTP_OK)
+                .and()
+                .body("success", Matchers.equalTo(true))
+                .body("orders", notNullValue());
+    }
+
+    public void getOrderWithoutTokenUnSuccessfully(ValidatableResponse response) {
+        response
+                .assertThat()
+                .statusCode(HttpURLConnection.HTTP_UNAUTHORIZED)
+                .and()
+                .body("success", Matchers.equalTo(false))
+                .body("message", Matchers.equalTo("You should be authorised"));
+    }
 }

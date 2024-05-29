@@ -2,15 +2,11 @@ package ingredients;
 
 import configure.EnvConfig;
 import io.restassured.http.ContentType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 
 import java.util.ArrayList;
 
 import static io.restassured.RestAssured.given;
 
-@Data
-@AllArgsConstructor
 public class Ingredient {
     public static ArrayList<String> getIngredients() {
         return given().log().all()
@@ -22,4 +18,5 @@ public class Ingredient {
                 .extract()
                 .path("data._id");
     }
+
 }

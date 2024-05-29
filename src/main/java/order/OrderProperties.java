@@ -27,4 +27,23 @@ public class OrderProperties {
                 .post(EnvConfig.ORDER_PATH)
                 .then().log().all();
     }
+
+    public ValidatableResponse getOrder(String token) {
+        return given().log().all()
+                .contentType(ContentType.JSON)
+                .header("Authorization", token)
+                .baseUri(EnvConfig.BASE_URL)
+                .when()
+                .get(EnvConfig.ORDER_PATH)
+                .then().log().all();
+    }
+
+    public ValidatableResponse getOrderWithoutToken() {
+        return given().log().all()
+                .contentType(ContentType.JSON)
+                .baseUri(EnvConfig.BASE_URL)
+                .when()
+                .get(EnvConfig.ORDER_PATH)
+                .then().log().all();
+    }
 }
