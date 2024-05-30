@@ -1,5 +1,6 @@
 package user;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Test;
@@ -11,6 +12,7 @@ public class CreateUserTest {
     private final UserChecks userChecks = new UserChecks();
 
     @Test
+    @DisplayName("create new User")
     public void createUser() {
         user = User.getRandomUser();
 
@@ -20,6 +22,7 @@ public class CreateUserTest {
     }
 
     @Test
+    @DisplayName("create User twin")
     public void createUserTwin() {
         user = User.getRandomUser();
         userProperties.createNewUser(user);
@@ -30,6 +33,7 @@ public class CreateUserTest {
     }
 
     @Test
+    @DisplayName("create User with invalid email")
     public void createInvalidUser() {
         user = User.getRandomUser();
         User userInvalid = User.getUserTwin(user);
@@ -40,6 +44,7 @@ public class CreateUserTest {
     }
 
     @After
+    @DisplayName("delete User")
     public void deleteUser() {
         if (token!= null) {
             ValidatableResponse response = userProperties.deleteExistingUser(token);

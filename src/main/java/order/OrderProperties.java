@@ -1,12 +1,15 @@
 package order;
 
 import configure.EnvConfig;
+import io.qameta.allure.Step;
 import io.restassured.http.ContentType;
 import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 
 public class OrderProperties {
+
+    @Step("create Order")
     public ValidatableResponse createNewOrder(Order order, String token) {
         return given().log().all()
                 .contentType(ContentType.JSON)
@@ -18,6 +21,7 @@ public class OrderProperties {
                 .then().log().all();
     }
 
+    @Step("create Order")
     public ValidatableResponse createNewOrder(Order order) {
         return given().log().all()
                 .contentType(ContentType.JSON)
@@ -28,6 +32,7 @@ public class OrderProperties {
                 .then().log().all();
     }
 
+    @Step("get Order")
     public ValidatableResponse getOrder(String token) {
         return given().log().all()
                 .contentType(ContentType.JSON)
@@ -38,6 +43,7 @@ public class OrderProperties {
                 .then().log().all();
     }
 
+    @Step("get Order without token")
     public ValidatableResponse getOrderWithoutToken() {
         return given().log().all()
                 .contentType(ContentType.JSON)

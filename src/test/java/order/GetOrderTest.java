@@ -1,6 +1,7 @@
 package order;
 
 import ingredients.Ingredient;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -22,6 +23,7 @@ public class GetOrderTest {
     private final OrderChecks orderChecks = new OrderChecks();
 
     @Before
+    @DisplayName("create new User")
     public void createUser() {
         user = User.getRandomUser();
         ValidatableResponse response = userProperties.createNewUser(user);
@@ -29,6 +31,7 @@ public class GetOrderTest {
     }
 
     @Before
+    @DisplayName("set Order")
     public void createOrder() {
         order = new Order();
         ingredients = new ArrayList<>();
@@ -40,18 +43,21 @@ public class GetOrderTest {
     }
 
     @Test
+    @DisplayName("get Order with token")
     public void getOrderWithToken() {
         ValidatableResponse response = orderProperties.getOrder(token);
         orderChecks.getOrderSuccessfully(response);
     }
 
     @Test
+    @DisplayName("get Order without token")
     public void getOrderWithoutToken() {
         ValidatableResponse response = orderProperties.getOrderWithoutToken();
         orderChecks.getOrderWithoutTokenUnSuccessfully(response);
     }
 
     @After
+    @DisplayName("delete User")
     public void deleteUser() {
         if (token!= null) {
             ValidatableResponse response = userProperties.deleteExistingUser(token);

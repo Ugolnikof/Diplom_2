@@ -1,6 +1,7 @@
 package order;
 
 import ingredients.Ingredient;
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -23,6 +24,7 @@ public class OrderTest {
     private final OrderChecks orderChecks = new OrderChecks();
 
     @Before
+    @DisplayName("create new User")
     public void createUser() {
         user = User.getRandomUser();
         ValidatableResponse response = userProperties.createNewUser(user);
@@ -30,6 +32,7 @@ public class OrderTest {
     }
 
     @Before
+    @DisplayName("set Order")
     public void createOrder() {
         order = new Order();
         ingredients = new ArrayList<>();
@@ -40,18 +43,21 @@ public class OrderTest {
     }
 
     @Test
+    @DisplayName("create new Order with token")
     public void createOrderWithToken() {
         ValidatableResponse response = orderProperties.createNewOrder(order, token);
         orderChecks.createSuccessfully(response, user);
     }
 
     @Test
+    @DisplayName("create new Order without token")
     public void createOrderWithoutToken() {
         ValidatableResponse response = orderProperties.createNewOrder(order);
         orderChecks.createWithoutTokenSuccessfully(response);
     }
 
     @Test
+    @DisplayName("create new Order without ingredients")
     public void createOrderWithoutIngredients() {
         order.setIngredients(new ArrayList<>(){});
         ValidatableResponse response = orderProperties.createNewOrder(order);
@@ -59,6 +65,7 @@ public class OrderTest {
     }
 
     @Test
+    @DisplayName("create new Order with invalid hash ingredients")
     public void createOrderWithInvalidHashIngredients() {
         ingredients.set(0, Ingredient.getIngredients().get(0) + "aaaaa");
         ingredients.set(1, Ingredient.getIngredients().get(1) + "aaaaa");
@@ -69,6 +76,7 @@ public class OrderTest {
     }
 
     @After
+    @DisplayName("delete User")
     public void deleteUser() {
         if (token!= null) {
             ValidatableResponse response = userProperties.deleteExistingUser(token);

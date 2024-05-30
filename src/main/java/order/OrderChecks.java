@@ -1,5 +1,6 @@
 package order;
 
+import io.qameta.allure.Step;
 import io.restassured.response.ValidatableResponse;
 import org.hamcrest.Matchers;
 import user.User;
@@ -9,6 +10,8 @@ import java.net.HttpURLConnection;
 import static org.hamcrest.CoreMatchers.notNullValue;
 
 public class OrderChecks {
+
+    @Step("check Order created successfully")
     public void createSuccessfully(ValidatableResponse response, User user) {
         response
                 .assertThat()
@@ -25,6 +28,7 @@ public class OrderChecks {
                 .body("order.price", notNullValue());
     }
 
+    @Step("check Order created without token successfully")
     public void createWithoutTokenSuccessfully(ValidatableResponse response) {
         response
                 .assertThat()
@@ -35,6 +39,7 @@ public class OrderChecks {
                 .body("order.number", notNullValue());
     }
 
+    @Step("check Order created without ingredients successfully")
     public void createWithoutIngredientsUnSuccessfully(ValidatableResponse response) {
         response
                 .assertThat()
@@ -44,12 +49,14 @@ public class OrderChecks {
                 .body("message", Matchers.equalTo("Ingredient ids must be provided"));
     }
 
+    @Step("check Order created with invalid hash ingredients unsuccessfully")
     public void createWithInvalidHashIngredientsUnSuccessfully(ValidatableResponse response) {
         response
                 .assertThat()
                 .statusCode(HttpURLConnection.HTTP_NOT_FOUND);
     }
 
+    @Step("check Order got successfully")
     public void getOrderSuccessfully(ValidatableResponse response) {
         response
                 .assertThat()
@@ -59,6 +66,7 @@ public class OrderChecks {
                 .body("orders", notNullValue());
     }
 
+    @Step("check Order got without token unsuccessfully")
     public void getOrderWithoutTokenUnSuccessfully(ValidatableResponse response) {
         response
                 .assertThat()

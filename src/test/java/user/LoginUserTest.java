@@ -1,5 +1,6 @@
 package user;
 
+import io.qameta.allure.junit4.DisplayName;
 import io.restassured.response.ValidatableResponse;
 import org.junit.After;
 import org.junit.Before;
@@ -12,6 +13,7 @@ public class LoginUserTest {
     private final UserChecks userChecks = new UserChecks();
 
     @Before
+    @DisplayName("create new User")
     public void createUser() {
         user = User.getRandomUser();
         ValidatableResponse response = userProperties.createNewUser(user);
@@ -19,6 +21,7 @@ public class LoginUserTest {
     }
 
     @Test
+    @DisplayName("login this User")
     public void loginUser() {
         LoggedUser loggedUser = LoggedUser.from(user);
 
@@ -27,6 +30,7 @@ public class LoginUserTest {
     }
 
     @Test
+    @DisplayName("login this User with invalid password")
     public void loginInvalidUser() {
         LoggedUser loggedUser = LoggedUser.from(user);
         String invalidPassword = loggedUser.getPassword().toUpperCase();
@@ -37,6 +41,7 @@ public class LoginUserTest {
     }
 
     @After
+    @DisplayName("delete User")
     public void deleteUser() {
         if (token != null) {
             ValidatableResponse response = userProperties.deleteExistingUser(token);
