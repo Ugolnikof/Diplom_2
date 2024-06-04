@@ -29,6 +29,7 @@ public class CreateUserTest {
 
         User userTwin = User.getUserTwin(user);
         ValidatableResponse response = userProperties.createNewUser(userTwin);
+        token = User.getToken(response);
         userChecks.createdTwinUnSuccessfully(response);
     }
 

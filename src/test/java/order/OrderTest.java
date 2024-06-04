@@ -45,14 +45,14 @@ public class OrderTest {
     @Test
     @DisplayName("create new Order with token")
     public void createOrderWithToken() {
-        ValidatableResponse response = orderProperties.createNewOrder(order, token);
+        ValidatableResponse response = orderProperties.createOrder(order, token);
         orderChecks.createSuccessfully(response, user);
     }
 
     @Test
     @DisplayName("create new Order without token")
     public void createOrderWithoutToken() {
-        ValidatableResponse response = orderProperties.createNewOrder(order);
+        ValidatableResponse response = orderProperties.createOrder(order);
         orderChecks.createWithoutTokenSuccessfully(response);
     }
 
@@ -60,7 +60,7 @@ public class OrderTest {
     @DisplayName("create new Order without ingredients")
     public void createOrderWithoutIngredients() {
         order.setIngredients(new ArrayList<>(){});
-        ValidatableResponse response = orderProperties.createNewOrder(order);
+        ValidatableResponse response = orderProperties.createOrder(order);
         orderChecks.createWithoutIngredientsUnSuccessfully(response);
     }
 
@@ -71,7 +71,7 @@ public class OrderTest {
         ingredients.set(1, Ingredient.getIngredients().get(1) + "aaaaa");
         ingredients.set(2, Ingredient.getIngredients().get(2) + "aaaaa");
         order.setIngredients(ingredients);
-        ValidatableResponse response = orderProperties.createNewOrder(order);
+        ValidatableResponse response = orderProperties.createOrder(order);
         orderChecks.createWithInvalidHashIngredientsUnSuccessfully(response);
     }
 

@@ -10,7 +10,7 @@ import static io.restassured.RestAssured.given;
 public class OrderProperties {
 
     @Step("create Order")
-    public ValidatableResponse createNewOrder(Order order, String token) {
+    public ValidatableResponse createOrder(Order order, String token) {
         return given().log().all()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
@@ -22,7 +22,7 @@ public class OrderProperties {
     }
 
     @Step("create Order")
-    public ValidatableResponse createNewOrder(Order order) {
+    public ValidatableResponse createOrder(Order order) {
         return given().log().all()
                 .contentType(ContentType.JSON)
                 .baseUri(EnvConfig.BASE_URL)

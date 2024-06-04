@@ -39,7 +39,7 @@ public class GetOrderTest {
         ingredients.add(Ingredient.getIngredients().get(1));
         ingredients.add(Ingredient.getIngredients().get(2));
         order.setIngredients(ingredients);
-        orderProperties.createNewOrder(order, token);
+        orderProperties.createOrder(order, token);
     }
 
     @Test
