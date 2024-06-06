@@ -1,4 +1,4 @@
-package user;
+package order;
 
 import configure.EnvConfig;
 import io.qameta.allure.Step;
@@ -7,63 +7,49 @@ import io.restassured.response.ValidatableResponse;
 
 import static io.restassured.RestAssured.given;
 
-public class UserProperties {
+public class OrderMethods {
 
-    @Step("create User")
-    public ValidatableResponse createNewUser(User user) {
+    @Step("create Order")
+    public ValidatableResponse createOrder(Order order, String token) {
         return given().log().all()
                 .contentType(ContentType.JSON)
+                .header("Authorization", token)
                 .baseUri(EnvConfig.BASE_URL)
-                .body(user)
+                .body(order)
                 .when()
-                .post(EnvConfig.AUTH_PATH + "/register")
+                .post(EnvConfig.ORDER_PATH)
                 .then().log().all();
     }
 
-    @Step("delete User")
-    public ValidatableResponse deleteExistingUser(String token) {
+    @Step("create Order")
+    public ValidatableResponse createOrder(Order order) {
+        return given().log().all()
+                .contentType(ContentType.JSON)
+                .baseUri(EnvConfig.BASE_URL)
+                .body(order)
+                .when()
+                .post(EnvConfig.ORDER_PATH)
+                .then().log().all();
+    }
+
+    @Step("get Order")
+    public ValidatableResponse getOrder(String token) {
         return given().log().all()
                 .contentType(ContentType.JSON)
                 .header("Authorization", token)
                 .baseUri(EnvConfig.BASE_URL)
                 .when()
-                .delete(EnvConfig.USER_PATH)
+                .get(EnvConfig.ORDER_PATH)
                 .then().log().all();
     }
 
-    @Step("login User")
-    public ValidatableResponse loginNewUser(LoggedUser loggedUser) {
+    @Step("get Order without token")
+    public ValidatableResponse getOrderWithoutToken() {
         return given().log().all()
                 .contentType(ContentType.JSON)
                 .baseUri(EnvConfig.BASE_URL)
-                .body(loggedUser)
                 .when()
-                .post(EnvConfig.AUTH_PATH + "/login")
+                .get(EnvConfig.ORDER_PATH)
                 .then().log().all();
     }
-
-    @Step("change User")
-    public ValidatableResponse changeUser(User user, String token) {
-        return given().log().all()
-                .contentType(ContentType.JSON)
-                .header("Authorization", token)
-                .baseUri(EnvConfig.BASE_URL)
-                .body(user)
-                .when()
-                .patch(EnvConfig.USER_PATH)
-                .then().log().all();
-    }
-
-    @Step("change User")
-    public ValidatableResponse changeUser(User user) {
-        return given().log().all()
-                .contentType(ContentType.JSON)
-                .baseUri(EnvConfig.BASE_URL)
-                .body(user)
-                .when()
-                .patch(EnvConfig.USER_PATH)
-                .then().log().all();
-    }
-
-
 }

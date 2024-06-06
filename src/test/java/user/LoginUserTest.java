@@ -9,14 +9,14 @@ import org.junit.Test;
 public class LoginUserTest {
     String token;
     User user;
-    private final UserProperties userProperties = new UserProperties();
+    private final UserMethods userMethods = new UserMethods();
     private final UserChecks userChecks = new UserChecks();
 
     @Before
     @DisplayName("create new User")
     public void createUser() {
         user = User.getRandomUser();
-        ValidatableResponse response = userProperties.createNewUser(user);
+        ValidatableResponse response = userMethods.createNewUser(user);
         token = User.getToken(response);
     }
 
@@ -25,7 +25,7 @@ public class LoginUserTest {
     public void loginUser() {
         LoggedUser loggedUser = LoggedUser.from(user);
 
-        ValidatableResponse response = userProperties.loginNewUser(loggedUser);
+        ValidatableResponse response = userMethods.loginNewUser(loggedUser);
         userChecks.loginSuccessfully(response, loggedUser);
     }
 
@@ -36,7 +36,7 @@ public class LoginUserTest {
         String invalidPassword = loggedUser.getPassword().toUpperCase();
         loggedUser.setPassword(invalidPassword);
 
-        ValidatableResponse response = userProperties.loginNewUser(loggedUser);
+        ValidatableResponse response = userMethods.loginNewUser(loggedUser);
         userChecks.loginInvalidUserUnSuccessfully(response);
     }
 
@@ -44,7 +44,7 @@ public class LoginUserTest {
     @DisplayName("delete User")
     public void deleteUser() {
         if (token != null) {
-            ValidatableResponse response = userProperties.deleteExistingUser(token);
+            ValidatableResponse response = userMethods.deleteExistingUser(token);
             userChecks.deleteSuccessfully(response);
         }
     }

@@ -9,14 +9,14 @@ import org.junit.Test;
 public class ChangeUserTest {
     String token;
     User user;
-    private final UserProperties userProperties = new UserProperties();
+    private final UserMethods userMethods = new UserMethods();
     private final UserChecks userChecks = new UserChecks();
 
     @Before
     @DisplayName("create new User")
     public void createUser() {
         user = User.getRandomUser();
-        ValidatableResponse response = userProperties.createNewUser(user);
+        ValidatableResponse response = userMethods.createNewUser(user);
         token = User.getToken(response);
     }
 
@@ -25,7 +25,7 @@ public class ChangeUserTest {
     public void changeUserWithToken() {
         user = User.getRandomUser();
 
-        ValidatableResponse response = userProperties.changeUser(user, token);
+        ValidatableResponse response = userMethods.changeUser(user, token);
         userChecks.changeSuccessfully(response, user);
     }
 
@@ -34,7 +34,7 @@ public class ChangeUserTest {
     public void changeUserWithoutToken() {
         user = User.getRandomUser();
 
-        ValidatableResponse response = userProperties.changeUser(user);
+        ValidatableResponse response = userMethods.changeUser(user);
         userChecks.changeUnSuccessfully(response);
     }
 
@@ -42,7 +42,7 @@ public class ChangeUserTest {
     @DisplayName("delete User")
     public void deleteUser() {
         if (token != null) {
-            ValidatableResponse response = userProperties.deleteExistingUser(token);
+            ValidatableResponse response = userMethods.deleteExistingUser(token);
             userChecks.deleteSuccessfully(response);
         }
     }

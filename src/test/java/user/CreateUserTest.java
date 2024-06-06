@@ -8,7 +8,7 @@ import org.junit.Test;
 public class CreateUserTest {
     String token;
     User user;
-    private final UserProperties userProperties = new UserProperties();
+    private final UserMethods userMethods = new UserMethods();
     private final UserChecks userChecks = new UserChecks();
 
     @Test
@@ -16,7 +16,7 @@ public class CreateUserTest {
     public void createUser() {
         user = User.getRandomUser();
 
-        ValidatableResponse response = userProperties.createNewUser(user);
+        ValidatableResponse response = userMethods.createNewUser(user);
         token = User.getToken(response);
         userChecks.createdSuccessfully(response, user);
     }
@@ -25,10 +25,10 @@ public class CreateUserTest {
     @DisplayName("create User twin")
     public void createUserTwin() {
         user = User.getRandomUser();
-        userProperties.createNewUser(user);
+        userMethods.createNewUser(user);
 
         User userTwin = User.getUserTwin(user);
-        ValidatableResponse response = userProperties.createNewUser(userTwin);
+        ValidatableResponse response = userMethods.createNewUser(userTwin);
         token = User.getToken(response);
         userChecks.createdTwinUnSuccessfully(response);
     }
@@ -40,7 +40,7 @@ public class CreateUserTest {
         User userInvalid = User.getUserTwin(user);
         userInvalid.setEmail(null);
 
-        ValidatableResponse response = userProperties.createNewUser(userInvalid);
+        ValidatableResponse response = userMethods.createNewUser(userInvalid);
         userChecks.createdInvalidUserUnSuccessfully(response);
     }
 
@@ -48,7 +48,7 @@ public class CreateUserTest {
     @DisplayName("delete User")
     public void deleteUser() {
         if (token!= null) {
-            ValidatableResponse response = userProperties.deleteExistingUser(token);
+            ValidatableResponse response = userMethods.deleteExistingUser(token);
             userChecks.deleteSuccessfully(response);
         }
     }

@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.Test;
 import user.User;
 import user.UserChecks;
-import user.UserProperties;
+import user.UserMethods;
 
 import java.util.ArrayList;
 
@@ -18,8 +18,8 @@ public class OrderTest {
     User user;
     Order order;
     ArrayList<String> ingredients;
-    private final UserProperties userProperties = new UserProperties();
-    private final OrderProperties orderProperties = new OrderProperties();
+    private final UserMethods userMethods = new UserMethods();
+    private final OrderMethods orderMethods = new OrderMethods();
     private final UserChecks userChecks = new UserChecks();
     private final OrderChecks orderChecks = new OrderChecks();
 
@@ -27,7 +27,7 @@ public class OrderTest {
     @DisplayName("create new User")
     public void createUser() {
         user = User.getRandomUser();
-        ValidatableResponse response = userProperties.createNewUser(user);
+        ValidatableResponse response = userMethods.createNewUser(user);
         token = User.getToken(response);
     }
 
@@ -45,14 +45,14 @@ public class OrderTest {
     @Test
     @DisplayName("create new Order with token")
     public void createOrderWithToken() {
-        ValidatableResponse response = orderProperties.createOrder(order, token);
+        ValidatableResponse response = orderMethods.createOrder(order, token);
         orderChecks.createSuccessfully(response, user);
     }
 
     @Test
     @DisplayName("create new Order without token")
     public void createOrderWithoutToken() {
-        ValidatableResponse response = orderProperties.createOrder(order);
+        ValidatableResponse response = orderMethods.createOrder(order);
         orderChecks.createWithoutTokenSuccessfully(response);
     }
 
@@ -60,7 +60,7 @@ public class OrderTest {
     @DisplayName("create new Order without ingredients")
     public void createOrderWithoutIngredients() {
         order.setIngredients(new ArrayList<>(){});
-        ValidatableResponse response = orderProperties.createOrder(order);
+        ValidatableResponse response = orderMethods.createOrder(order);
         orderChecks.createWithoutIngredientsUnSuccessfully(response);
     }
 
@@ -71,7 +71,7 @@ public class OrderTest {
         ingredients.set(1, Ingredient.getIngredients().get(1) + "aaaaa");
         ingredients.set(2, Ingredient.getIngredients().get(2) + "aaaaa");
         order.setIngredients(ingredients);
-        ValidatableResponse response = orderProperties.createOrder(order);
+        ValidatableResponse response = orderMethods.createOrder(order);
         orderChecks.createWithInvalidHashIngredientsUnSuccessfully(response);
     }
 
@@ -79,7 +79,7 @@ public class OrderTest {
     @DisplayName("delete User")
     public void deleteUser() {
         if (token!= null) {
-            ValidatableResponse response = userProperties.deleteExistingUser(token);
+            ValidatableResponse response = userMethods.deleteExistingUser(token);
             userChecks.deleteSuccessfully(response);
         }
     }
