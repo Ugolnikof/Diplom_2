@@ -25,12 +25,12 @@ public class CreateUserTest {
     @DisplayName("create User twin")
     public void createUserTwin() {
         user = User.getRandomUser();
-        userMethods.createNewUser(user);
+        ValidatableResponse response = userMethods.createNewUser(user);
+        token = User.getToken(response);
 
         User userTwin = User.getUserTwin(user);
-        ValidatableResponse response = userMethods.createNewUser(userTwin);
-        token = User.getToken(response);
-        userChecks.createdTwinUnSuccessfully(response);
+        ValidatableResponse responseTwin = userMethods.createNewUser(userTwin);
+        userChecks.createdTwinUnSuccessfully(responseTwin);
     }
 
     @Test
